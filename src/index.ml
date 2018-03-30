@@ -7,7 +7,8 @@ let client = Coinbase.client credentials
 let port = 3000
 let hostname = "127.0.0.1"
 let create_server http =
-  let server = http##createServer begin fun [@bs] _ resp ->
+  let server = http##createServer begin fun [@bs] req resp ->
+      Js.log req;
       Coinbase.ExchangeRates.get 
         client 
         (Coinbase.ExchangeRates.req ~currency:"BTC")
