@@ -3,7 +3,6 @@
 
 type app
 external app : unit -> app = "express" [@@bs.module]
-external json : unit -> app = "" [@@bs.val] [@@bs.module "express"]
 external listen : app -> int -> unit = "" [@@bs.send]
 type req
 type res
