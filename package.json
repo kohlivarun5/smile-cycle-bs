@@ -13,5 +13,8 @@
   "license": "MIT",
   "devDependencies": {
     "bs-platform": "^2.2.3"
+  },
+  "dependencies": {
+    "coinbase": "^2.0.7"
   }
 }
