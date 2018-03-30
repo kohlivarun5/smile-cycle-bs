@@ -1,0 +1,22 @@
+{
+  "name": "smile-cycle-bs",
+  "version": "1.0.0",
+  "description": "Smile cycle bot im BS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kohlivarun5/smile-cycle-bs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kohlivarun5/smile-cycle-bs/issues"
+  },
+  "homepage": "https://github.com/kohlivarun5/smile-cycle-bs#readme",
+  "devDependencies": {
+    "bs-platform": "^2.2.3"
+  }
+}
