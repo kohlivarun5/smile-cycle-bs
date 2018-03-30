@@ -1,21 +1,16 @@
 {
-  "name": "smile-cycle-bs",
-  "version": "1.0.0",
-  "description": "Smile cycle bot im BS",
-  "main": "index.js",
+  "name": "smile-cycle-bs2",
+  "version": "0.1.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kohlivarun5/smile-cycle-bs.git"
-  },
+  "keywords": [
+    "BuckleScript"
+  ],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kohlivarun5/smile-cycle-bs/issues"
-  },
-  "homepage": "https://github.com/kohlivarun5/smile-cycle-bs#readme",
+  "license": "MIT",
   "devDependencies": {
     "bs-platform": "^2.2.3"
   }
