@@ -1,6 +1,6 @@
 let credentials = Coinbase.credentials 
-                      ~apiKey:""
-                      ~apiSecret:""
+                      ~apiKey:Credentials.Coinbase.apiKey
+                      ~apiSecret:Credentials.Coinbase.apiSecret
 let client = Coinbase.client credentials 
 
 let app = Express.app () ;;
