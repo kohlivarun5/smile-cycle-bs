@@ -8,7 +8,7 @@ let app = Express.app () ;;
 Express.use_json app (BodyParser.json ());;
 Express.use_urlencoded app (BodyParser.urlencoded (BodyParser.urlencoded_params ~extended:true));;
 
-Express.get app "/" (fun req resp -> 
+Express.get app "/" (fun _ resp -> 
   Coinbase.ExchangeRates.get 
     client 
     (Coinbase.ExchangeRates.req ~currency:"BTC")
@@ -22,7 +22,8 @@ Express.get app "/" (fun req resp ->
               res ^ Printf.sprintf "\n %s : %s" key value )
           "" entries 
       in
-      Express.send resp res; ());
+      let _ = Express.send resp res in 
+      ());
   resp
   );;
 
