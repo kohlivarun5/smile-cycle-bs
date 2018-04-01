@@ -1,11 +1,11 @@
-external parseResponse : string -> 'a = "parse" [@@bs.scope "JSON"][@@bs.val]
+let headers = Js.Dict.fromList ["User-Agent","Request-Promise"]
 
 let query currency direction = 
-  Request_promise_native.request 
-    ("https://api.coinbase.com/v2/prices/" ^ currency ^ "-USD/" ^ direction)
-  |> Js.Promise.then_ (fun htmlString -> 
-      Js.Promise.resolve 
-      (currency,parseResponse htmlString))
+  Request_promise_native.request_opts 
+    (Request_promise_native.options 
+      ~json:true ~headers
+      ~uri:("https://api.coinbase.com/v2/prices/" ^ currency ^ "-USD/" ^ direction))
+  |> Js.Promise.then_ (fun resp -> Js.Promise.resolve (currency,resp))
 
 let get_prices () : Types.quotes_p = 
   let curs = [|"btc";"eth";"ltc";"bch"|] in 

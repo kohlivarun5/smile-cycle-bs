@@ -3,18 +3,20 @@ let telegram = Telegraf.telegram telegraf
 module Telegram = Telegraf.Telegram
 
 let arb () = 
-  Arbitrage.coinbase_coindelta () 
-  |> Js.Promise.then_ (fun arbs ->
-      arbs 
-      |> Formatting.format_arbs 
+  [|
+    Arbitrage.coinbase_coindelta ();
+    Arbitrage.coinbase_koinex ();
+  |]
+  |> Js.Promise.all
+  |> Js.Promise.then_ (fun arbs_arr -> 
+      Js.Array.map Formatting.format_arbs arbs_arr 
+      |>  Array.to_list |> String.concat "\n "
       |> Js.Promise.resolve)
 
 let handler (ctx:Telegraf.ctx) resp = 
-  Js.log ctx;
   let message = ctx##message in
   let message_id = message##message_id in 
   let text = message##text in 
-  let from = message##from in 
   let chat = message##chat in 
   let chat_id = chat##id in 
 
@@ -36,7 +38,6 @@ let handler (ctx:Telegraf.ctx) resp =
   in
   text_p
   |> Js.Promise.then_ (fun text -> 
-    Js.log ("txt",text);
     Telegram.sendMessage 
       telegram 
       ~chat_id
