@@ -3,7 +3,7 @@ let headers = Js.Dict.fromList ["User-Agent","Request-Promise"]
 let query currency direction = 
   Request_promise_native.request_opts 
     (Request_promise_native.options 
-      ~json:true ~headers
+      ~json:(Js.Boolean.to_js_boolean true) ~headers
       ~uri:("https://api.coinbase.com/v2/prices/" ^ currency ^ "-USD/" ^ direction))
   |> Js.Promise.then_ (fun resp -> Js.Promise.resolve (currency,resp))
 

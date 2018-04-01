@@ -4,7 +4,7 @@ external request :
 
 type options
 external options : 
-  ?json:bool ->
+  ?json:Js.boolean ->
   ?headers:string Js.Dict.t ->
   uri:string ->
   options = "" [@@bs.obj]

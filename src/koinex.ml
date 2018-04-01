@@ -4,8 +4,7 @@ let query () =
   Request_promise_native.request_opts 
     (Request_promise_native.options 
       ~uri:"https://koinex.in/api/ticker"
-      ~headers
-      ~json:true)
+      ~json:(Js.Boolean.to_js_boolean true) ~headers)
 
 let get_prices () : Types.quotes_p = 
   query () 

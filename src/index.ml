@@ -13,7 +13,7 @@ let app = Express.app () ;;
 module Promise = Js.Promise;;
 
 Express.use_json app (BodyParser.json ());;
-Express.use_urlencoded app (BodyParser.urlencoded (BodyParser.urlencoded_params ~extended:true));;
+Express.use_urlencoded app (BodyParser.urlencoded (BodyParser.urlencoded_params ~extended:(Js.Boolean.to_js_boolean true)));;
 
 Express.get app "/" (fun _ resp -> Express.send resp "Hello");
 

@@ -1,6 +1,6 @@
 let calc_arbs (from,arbs1) (to_,arbs2) usd_inr = 
     arbs1 
-    |> Js.Array.map (fun {Types.for_;dom=dom1;bid=_;ask} ->
+    |> Js.Array.map (fun {Types.for_;dom=_;bid=_;ask} ->
         let bid_opt = 
           Js.Array.find 
             (fun (q:Types.quote) -> 
@@ -9,7 +9,7 @@ let calc_arbs (from,arbs1) (to_,arbs2) usd_inr =
         in
         match bid_opt with 
         | None -> None 
-        | Some {bid;dom=dom2;_} -> 
+        | Some {bid;_} -> 
             let notional = 1000. in 
             let buy = notional /. ask in 
             let sell = buy *. bid in 
