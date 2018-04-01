@@ -16,7 +16,8 @@ let handler (ctx:Telegraf.ctx) resp =
       ~parse_mode:"Markdown"
       ~reply_to_message_id:message_id
       ()
-  in
+  in 
+  let _ = Coindelta.get_prices () in
   Telegram.sendMessage 
     telegram 
     ~chat_id
