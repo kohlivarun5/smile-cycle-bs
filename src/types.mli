@@ -4,13 +4,17 @@ type quote = {
   bid : float;
   ask : float;
 }
-type quotes = quote Js.Array.t Js.Promise.t
+type quotes = quote Js.Array.t
+type quotes_p = quotes Js.Promise.t
 
-type arbitrage = {
-  from : string;
-  to_ : string;
+type arb = {
   gain_perc : float;
   coin : string;
 }
-type arbs = arbitrage Js.Array.t Js.Promise.t
 
+type arbs = {
+  from : string;
+  to_ : string; 
+  arbs : arb array;
+}
+type arbs_p = arbs Js.Promise.t

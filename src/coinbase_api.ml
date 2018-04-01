@@ -7,7 +7,7 @@ let query currency direction =
       Js.Promise.resolve 
       (currency,parseResponse htmlString))
 
-let get_prices () : Types.quotes = 
+let get_prices () : Types.quotes_p = 
   let curs = [|"btc";"eth";"ltc";"bch"|] in 
 
   let bids = 

@@ -6,7 +6,7 @@ let query () =
 external parseResponse : string -> 'a = "parse" [@@bs.scope "JSON"][@@bs.val]
 
 
-let get_prices () : Types.quotes = 
+let get_prices () : Types.quotes_p = 
   query () 
    |> Js.Promise.then_ (fun data -> 
       data |> 
