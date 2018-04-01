@@ -14,7 +14,7 @@ type 'a get_req = <
 > Js.t
 external get : app -> string -> ('a get_req -> res -> 'b) -> unit = "" [@@bs.send]
 
-type 'a post_req = < body : 'a Js.t > Js.t
+type 'a post_req = < body : 'a > Js.t
 external post : app -> string -> ('a post_req -> res -> 'b) -> unit = "" [@@bs.send]
 
 external send : res -> string -> res = "" [@@bs.send]

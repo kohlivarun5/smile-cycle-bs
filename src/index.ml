@@ -6,11 +6,9 @@ let cb_client =
   in
   Coinbase.client credentials 
 
-let tel_client = Telegraf.client Credentials.Telegram.token 
 let webhook_path = "/webhook"
 
 let app = Express.app () ;; 
-
 
 module Promise = Js.Promise;;
 
@@ -34,27 +32,22 @@ Express.get app "/" (fun _ resp ->
       let _ = Express.send resp res in 
       ());
   ()
-  );;
+);
 
 
 type url_query = < url : string >;;
-
 Express.get app "/set_webhook" (fun (req:(url_query Express.get_req)) resp -> 
   let url = req##query##url in 
   Js.log url;
   Telegraf.Telegram.setWebhook 
-    (Telegraf.telegram tel_client) ~url  
+    Webhook.telegram ~url
   |> Promise.catch (fun e -> Js.log e; Promise.resolve false)
   |> Promise.then_ (fun success ->
       Express.send resp (if success then "Updated" else "Failed!")
       |> Promise.resolve)
 );
 
+Express.post app webhook_path (fun (req:Telegraf.ctx Express.post_req) resp -> 
+  Webhook.handler req##body resp);
 
-Express.get app webhook_path 
-  (Telegraf.webhookCallback 
-    tel_client 
-    webhook_path 
-    Webhook.callback);;
-
-Express.listen app 5000;;
+Express.listen app 5000;
