@@ -3,6 +3,7 @@ let telegram = Telegraf.telegram telegraf
 module Telegram = Telegraf.Telegram
 
 let handler (ctx:Telegraf.ctx) resp = 
+  Js.log ctx;
   let message = ctx##message in
   let message_id = message##message_id in 
   let text = message##text in 
@@ -16,10 +17,15 @@ let handler (ctx:Telegraf.ctx) resp =
       ~parse_mode:"Markdown"
       ~reply_to_message_id:message_id
       ()
-  in 
-  let _ = Coindelta.get_prices () in
-  Telegram.sendMessage 
-    telegram 
-    ~chat_id
-    ~text:"Hello"
-    ~send_message_params 
+  in  
+
+  let arbs = Arbitrage.coinbase_coindelta () in 
+  let str = Formatting.format_arbs arbs in 
+  Js.Promise.then_ (fun text -> 
+    Js.log ("txt",text);
+    Telegram.sendMessage 
+      telegram 
+      ~chat_id
+      ~text
+      ~send_message_params)
+    str

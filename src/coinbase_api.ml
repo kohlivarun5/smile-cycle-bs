@@ -4,9 +4,10 @@ let query currency direction =
   Request_promise_native.request 
     ("https://api.coinbase.com/v2/prices/" ^ currency ^ "-USD/" ^ direction)
   |> Js.Promise.then_ (fun htmlString -> 
-      Js.Promise.resolve (currency,parseResponse htmlString))
+      Js.Promise.resolve 
+      (currency,parseResponse htmlString))
 
-let get_prices () = 
+let get_prices () : Types.quotes = 
   let curs = [|"btc";"eth";"ltc";"bch"|] in 
 
   let bids = 
@@ -33,7 +34,9 @@ let get_prices () =
                 ask=ask##data##amount;
               }
       )
-          |> Js.Promise.resolve
+      |> Js.Array.filter Js.Option.isSome 
+      |> Js.Array.map Js.Option.getExn 
+      |> Js.Promise.resolve
   )
 
 
