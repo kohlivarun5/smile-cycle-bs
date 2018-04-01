@@ -1,4 +1,4 @@
-let telegraf = Telegraf.client Credentials.Telegram.token  
+let telegraf = Telegraf.client Credentials.Telegram.dev_token 
 let telegram = Telegraf.telegram telegraf
 module Telegram = Telegraf.Telegram
 
