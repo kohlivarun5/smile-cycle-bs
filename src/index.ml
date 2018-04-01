@@ -1,16 +1,25 @@
-let credentials = Coinbase.credentials 
-                      ~apiKey:Credentials.Coinbase.apiKey
-                      ~apiSecret:Credentials.Coinbase.apiSecret
-let client = Coinbase.client credentials 
+let cb_client = 
+  let credentials = 
+    Coinbase.credentials 
+      ~apiKey:Credentials.Coinbase.apiKey
+      ~apiSecret:Credentials.Coinbase.apiSecret
+  in
+  Coinbase.client credentials 
 
-let app = Express.app () ;;
+let tel_client = Telegraf.client Credentials.Telegram.token 
+let webhook_path = "/webhook"
+
+let app = Express.app () ;; 
+
+
+module Promise = Js.Promise;;
 
 Express.use_json app (BodyParser.json ());;
 Express.use_urlencoded app (BodyParser.urlencoded (BodyParser.urlencoded_params ~extended:true));;
 
 Express.get app "/" (fun _ resp -> 
   Coinbase.ExchangeRates.get 
-    client 
+    cb_client 
     (Coinbase.ExchangeRates.req ~currency:"BTC")
     (fun _ rates -> 
 
@@ -24,12 +33,28 @@ Express.get app "/" (fun _ resp ->
       in
       let _ = Express.send resp res in 
       ());
-  resp
+  ()
   );;
 
-Express.get app "/webhook" (fun req resp -> 
-  Js.log req;
-  Express.send resp "Webhook");;
+
+type url_query = < url : string >;;
+
+Express.get app "/set_webhook" (fun (req:(url_query Express.get_req)) resp -> 
+  let url = req##query##url in 
+  Js.log url;
+  Telegraf.Telegram.setWebhook 
+    (Telegraf.telegram tel_client) ~url  
+  |> Promise.catch (fun e -> Js.log e; Promise.resolve false)
+  |> Promise.then_ (fun success ->
+      Express.send resp (if success then "Updated" else "Failed!")
+      |> Promise.resolve)
+);
 
 
-Express.listen app 3000;;
+Express.get app webhook_path 
+  (Telegraf.webhookCallback 
+    tel_client 
+    webhook_path 
+    Webhook.callback);;
+
+Express.listen app 5000;;
