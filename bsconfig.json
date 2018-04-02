@@ -11,10 +11,10 @@
       "type": "dev"
     }
   ],
+  "suffix":".js",
   "package-specs": {
     "module": "commonjs"
   },
-  "suffix": ".bs.js",
   "bs-dependencies": [
       // add your bs-dependencies here 
   ],

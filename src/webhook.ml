@@ -10,7 +10,7 @@ let arb () =
   |> Js.Promise.all
   |> Js.Promise.then_ (fun arbs_arr -> 
       Js.Array.map Formatting.format_arbs arbs_arr 
-      |>  Array.to_list |> String.concat "\n "
+      |>  Array.to_list |> String.concat "\n"
       |> Js.Promise.resolve)
 
 let handler (ctx:Telegraf.ctx) resp = 

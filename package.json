@@ -7,6 +7,7 @@
     "watch": "bsb -make-world -w",
     "jest": "jest"
   },
+  "main":"lib/js/src/index.js",
   "keywords": [
     "BuckleScript"
   ],
