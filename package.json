@@ -1,5 +1,5 @@
 {
-  "name": "smile-cycle-bs2",
+  "name": "smile-cycle-bs",
   "version": "0.1.0",
   "scripts": {
     "start": "node lib/js/src/index.js",

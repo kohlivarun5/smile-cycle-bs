@@ -39,6 +39,6 @@ let get_prices () : Types.quotes_p =
       |> Js.Promise.resolve
   )
 
-
+let buy_fees_perc = 1.49
 
 

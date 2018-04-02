@@ -1,4 +1,4 @@
-let calc_arbs (from,arbs1) (to_,arbs2) usd_inr = 
+let calc_arbs (from,buy_fees_perc,arbs1) (to_,arbs2) usd_inr = 
     arbs1 
     |> Js.Array.map (fun {Types.for_;dom=_;bid=_;ask} ->
         let bid_opt = 
@@ -10,10 +10,11 @@ let calc_arbs (from,arbs1) (to_,arbs2) usd_inr =
         match bid_opt with 
         | None -> None 
         | Some {bid;_} -> 
-            let notional = 1000. in 
+            let orig_notional = 100. in 
+            let notional = orig_notional -. buy_fees_perc in
             let buy = notional /. ask in 
             let sell = buy *. bid in 
-            let buy_flow = notional *. usd_inr in 
+            let buy_flow = orig_notional *. usd_inr in 
             let profit = sell -. buy_flow in 
             if profit < 0. 
             then None 
@@ -32,7 +33,7 @@ let coinbase_coindelta () : Types.arbs_p =
   let usd_inr = Forex.get_prices "USD" "INR" in
   Js.Promise.all3 (coinbase,coindelta,usd_inr) 
   |> Js.Promise.then_ (fun (coinbase,coindelta,usd_inr) ->
-      calc_arbs ("Coinbase",coinbase) ("Coindelta",coindelta) usd_inr
+      calc_arbs ("Coinbase",Coinbase_api.buy_fees_perc,coinbase) ("Coindelta",coindelta) usd_inr
       |> Js.Promise.resolve)
 
 let coinbase_koinex () : Types.arbs_p = 
@@ -41,5 +42,5 @@ let coinbase_koinex () : Types.arbs_p =
   let usd_inr = Forex.get_prices "USD" "INR" in
   Js.Promise.all3 (coinbase,koinex,usd_inr) 
   |> Js.Promise.then_ (fun (coinbase,koinex,usd_inr) ->
-      calc_arbs ("Coinbase",coinbase) ("Koinex",koinex) usd_inr
+      calc_arbs ("Coinbase",Coinbase_api.buy_fees_perc,coinbase) ("Koinex",koinex) usd_inr
       |> Js.Promise.resolve)
