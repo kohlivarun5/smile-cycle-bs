@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node lib/js/src/index.js",
+    "deploytest" : "gcloud app deploy --project smilecycletest",
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
@@ -10,7 +11,10 @@
   },
   "main":"lib/js/src/index.js",
   "keywords": [
-    "BuckleScript"
+    "BuckleScript",
+    "Coinbase",
+    "Crypto",
+    "App Engine"
   ],
   "engines": {
     "node": ">=4.3.2"
