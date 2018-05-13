@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node lib/js/src/main.js",
-    "deploytest" : "cp package.json lib/js/src/ && cd lib/js/src/ && gcloud beta functions deploy smile-cycle-webhook --trigger-http --entry-point webhook --source ./ && gcloud beta functions deploy smile-cycle-setwebhook --trigger-http --entry-point set_webhook --source ./",
+    "deploytest" : "cp package.json lib/js/src/ && cd lib/js/src/ && gcloud beta functions deploy smile-cycle-webhook --trigger-http --entry-point webhook --source ./ && gcloud beta functions deploy smile-cycle-setwebhook --trigger-http --entry-point set_webhook --source ./ && rm -rf package.json",
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
