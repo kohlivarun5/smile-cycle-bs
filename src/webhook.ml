@@ -74,10 +74,11 @@ let handler (ctx:Telegraf.ctx) resp =
 
   (match text with 
   | _ when (Js.String.startsWith "/arb" text) 
-    -> arb () |> reply ~reply_to_message_id:message_id ~chat_id 
+    -> arb ()
   | _ when (Js.String.startsWith "/coinbase_balance" text) 
-    -> arb () |> reply ~reply_to_message_id:message_id ~chat_id 
+    -> coinbase_balance ()
   | _ -> 
     Printf.sprintf "Unknown command: %s" text 
     |> Js.Promise.resolve)
+  |> reply ~reply_to_message_id:message_id ~chat_id 
   |> Js.Promise.then_ (fun msg -> Express.send resp msg |> Js.Promise.resolve)
