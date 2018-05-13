@@ -12,7 +12,7 @@ let format_arbs ({from;to_;arbs}:Types.arbs) : string =
     )
   in  
   let str = 
-    str |> Array.to_list |> String.concat "\n"
+    str |> Array.to_list |> (function [] -> " - No arbitrage found!" | l -> String.concat "\n" l)
   in 
   let text = 
     Printf.sprintf "_%s -> %s_\n%s" from to_ str 
