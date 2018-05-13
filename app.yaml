@@ -6,9 +6,9 @@ automatic_scaling:
   max_num_instances: 1
   cool_down_period_sec: 180
   cpu_utilization:
-    target_utilization: 0.2
+    target_utilization: 0.6
 
 resources:
-  cpu: 0.2
-  memory_gb: 0.2
+  cpu: 1
+  memory_gb: 0.5
   disk_size_gb: 10

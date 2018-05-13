@@ -2,14 +2,13 @@
   "name": "smile-cycle-bs",
   "version": "0.1.0",
   "scripts": {
-    "start": "node lib/js/src/index.js",
+    "start": "node lib/js/src/main.js",
     "deploytest" : "gcloud app deploy --project smilecycletest",
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
     "jest": "jest"
   },
-  "main":"lib/js/src/index.js",
   "keywords": [
     "BuckleScript",
     "Coinbase",
