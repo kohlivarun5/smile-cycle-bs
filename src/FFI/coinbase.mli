@@ -15,4 +15,27 @@ module ExchangeRates : sig
   type error
   type callback = error -> rates -> unit 
   external get : client -> req -> callback -> unit = "getExchangeRates" [@@bs.send]
+end 
+
+type err 
+type 'a empty = 'a Js.t
+module Accounts : sig 
+  
+  type balance = <
+    amount:string;
+    currency:string;
+  > Js.t
+
+  type accounts = <
+    id:       string;
+    name:     string;
+    primary : bool;
+    currency: string;
+    balance: balance;
+    native_balance: balance;
+  > Js.t Js.Array.t
+
+  type callback = err -> accounts -> unit
+  external get : client -> 'a empty -> callback -> unit = "getAccounts" [@@bs.send]
+
 end

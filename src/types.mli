@@ -18,3 +18,15 @@ type arbs = {
   arbs : arb array;
 }
 type arbs_p = arbs Js.Promise.t
+
+type amount = {
+  amount:float;
+  currency:string;
+} 
+
+type balance = {
+  crypto : amount;
+  native : amount;
+}
+
+type balances = balance array

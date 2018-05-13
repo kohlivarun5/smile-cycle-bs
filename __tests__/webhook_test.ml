@@ -11,15 +11,27 @@ let () =
             ((Js.String.split "No arbitrage" str 
             |> Js.Array.length) - 1)
           with 
-          | 0 -> 10 
-          | 1 -> 7
-          | 2 -> 4
-          | _ -> 0
+          | 0 -> 6
+          | 1 -> 5 
+          | 2 -> 4 
+          | _ -> 100 
           
         in
         str 
         |> Js.String.split "\n"
         |> Js.Array.length
-        |> expect |> toBe expected
+        |> expect |> toBeGreaterThanOrEqual expected
+        |> Js.Promise.resolve)
+  )
+
+let () = 
+  testPromise "coinbase_balance()" (fun () -> 
+    Webhook.coinbase_balance () 
+    |> Js.Promise.then_ (fun str -> 
+        Js.log str;
+        str 
+        |> Js.String.split "\n"
+        |> Js.Array.length
+        |> expect |> toBeGreaterThanOrEqual 4
         |> Js.Promise.resolve)
   )
